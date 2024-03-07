@@ -1,0 +1,34 @@
+#include <iostream>
+#include <string>
+
+std::string autokey_encrypt(const std::string& message, const std::string& initial_key) {
+    // Convert the message and key to uppercase for consistency
+    std::string encrypted_message;
+    std::string key = initial_key;
+
+    for (size_t i = 0; i < message.length(); ++i) {
+        char message_char = toupper(message[i]);
+        char key_char = toupper(key[i]);
+        
+        // Perform Autokey encryption
+        char encrypted_char = ((message_char + key_char - 2 * 'A') % 26) + 'A';
+        encrypted_message += encrypted_char;
+
+        // Update the key with the newly encrypted character
+        key += encrypted_char;
+    }
+
+    return encrypted_message;
+}
+
+int main() {
+    // Example usage
+    std::string message = "encryption";
+    std::string initial_key = "secret";
+
+    std::string encrypted_message = autokey_encrypt(message, initial_key);
+
+    std::cout << "Encrypted Message: " << encrypted_message << std::endl;
+
+    return 0;
+}
